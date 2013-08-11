@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	setWindowTitle("Snake");
 
+
 	gameWidget = new GameWidget(parent);
 	ui->mainLayout->addWidget(gameWidget);
 	gameWidget->activateWindow();

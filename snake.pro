@@ -14,11 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     mainWindow.cpp \
-    gameWidget.cpp
+    gameWidget.cpp \
+    headband.cpp
 
 HEADERS  += \
     mainWindow.h \
     gameWidget.h \
-    snake.h
+    snake.h \
+    headband.h
 
-FORMS    += game.ui
+FORMS    += game.ui \
+    headband.ui
