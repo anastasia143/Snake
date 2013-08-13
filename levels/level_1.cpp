@@ -78,7 +78,7 @@ void Level_1::snakeMovement()
 	{
 		int step = 14;
 		if ((snake->balls->at(0)->rect().y() - step) > 365)
-			step = -365;
+			step = -377;
 		snake->balls->at(0)->setRect(snake->balls->at(0)->rect().x(), (snake->balls->at(0)->rect().y() + step), 14, 14);
 		break;
 	}

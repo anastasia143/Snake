@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include "gameWidget.h"
 #include "mainWindow.h"
+#include "rules.h"
 
 namespace Ui {
 class Headband;
@@ -22,9 +23,11 @@ public slots:
 	void onNewGameClicked();
 	void onRulesClicked();
 	void onRecordsClicked();
+	void onMenuClicked();
 
 private:
 	Ui::Headband *ui;
 	MainWindow *newGame;
+	Rules *rules;
 
 };

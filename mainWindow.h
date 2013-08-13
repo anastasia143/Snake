@@ -28,6 +28,7 @@ public slots:
 protected:
 	Ui::MainWindow *ui;
 	GameWidget *gameWidget;
+
 	int levelTimeSeconds;
 	int levelTimeMinutes;
 	QTimer updateTimer;

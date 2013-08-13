@@ -8,11 +8,10 @@ Headband::Headband(QWidget *parent) :
 	ui->setupUi(this);
 	setWindowTitle("Snake");
 
-	newGame = new MainWindow;
-
 	connect(ui->buttonNewGame, SIGNAL(clicked()), this, SLOT(onNewGameClicked()));
 	connect(ui->buttonRules, SIGNAL(clicked()), this, SLOT(onRulesClicked()));
 	connect(ui->buttonRecords, SIGNAL(clicked()), this, SLOT(onRecordsClicked()));
+
 }
 
 Headband::~Headband()
@@ -25,17 +24,27 @@ Headband::~Headband()
 void Headband::onNewGameClicked()
 {
 	this->hide();
+	newGame = new MainWindow;
 	newGame->show();
 }
 
 
 void Headband::onRulesClicked()
 {
-
+	this->hide();
+	rules = new Rules;
+	connect(rules, SIGNAL(menuPressed()), this, SLOT(onMenuClicked()));
+	rules->show();
 }
 
 
 void Headband::onRecordsClicked()
 {
 
+}
+
+void Headband::onMenuClicked()
+{
+	rules->hide();
+	this->show();
 }
