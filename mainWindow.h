@@ -1,7 +1,10 @@
 #pragma once
 
 #include <QMainWindow>
-#include "gameWidget.h"
+#include <QTime>
+#include <QTimeEdit>
+#include "levels/level_1.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -15,15 +18,17 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
-signals:
-
 public slots:
 	void onApplesCountChanged(int apples);
 	void gameOver();
+	void updateTime();
+	void pauseGame();
+	void continueGame();
 	
-private:
+protected:
 	Ui::MainWindow *ui;
 	GameWidget *gameWidget;
-	int maxApplesOnLevel;
-	int level;
+	int levelTimeSeconds;
+	int levelTimeMinutes;
+	QTimer updateTimer;
 };

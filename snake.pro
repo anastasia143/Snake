@@ -15,13 +15,15 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainWindow.cpp \
     gameWidget.cpp \
-    headband.cpp
+    headband.cpp \
+    levels/level_1.cpp
 
 HEADERS  += \
     mainWindow.h \
     gameWidget.h \
     snake.h \
-    headband.h
+    headband.h \
+    levels/level_1.h
 
 FORMS    += game.ui \
     headband.ui

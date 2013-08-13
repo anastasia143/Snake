@@ -25,6 +25,6 @@ public slots:
 
 private:
 	Ui::Headband *ui;
-	MainWindow newGame;
+	MainWindow *newGame;
 
 };

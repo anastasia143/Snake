@@ -13,22 +13,24 @@ class GameWidget : public QGraphicsView
 public:
 	explicit GameWidget(QWidget *parent = 0);
 	~GameWidget();
-	void stopGame();
+	void virtual stopGame() = 0;
+	void virtual continueGame() = 0;
+	int level;
+	int maxApplesOnLevel;
+	int levelSpeed;
 
 signals:
 	void applesCountChanged(int);
 	void snakeSelfIntersection();
 	void wallsIntersection();
-
-public slots:
-	void snakeMovement();
-	void throwApple();
+	void levelIsPassed(int);
 
 protected:
 	void keyPressEvent(QKeyEvent *event);
-	void onAppleIntersection();
+	void virtual onAppleIntersection() = 0;
+	void virtual snakeMovement() = 0;
+	void virtual throwApple() = 0;
 
-private:
 	QGraphicsScene *scene;
 	Snake *snake;
 	int applesCount;
@@ -36,5 +38,5 @@ private:
 	QGraphicsEllipseItem *apple;
 
 	QGraphicsEllipseItem *createEllipse(int x, int y, int w, int h, QPen pen, QBrush brush);
-	void createFirstSnake();
+	virtual void createFirstSnake() = 0;
 };
