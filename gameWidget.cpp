@@ -8,6 +8,23 @@ QGraphicsEllipseItem *GameWidget::createEllipse(int x, int y, int w, int h, QPen
 {
 	QGraphicsEllipseItem *item = new QGraphicsEllipseItem(x, y, w, h);
 	item->setBrush(brush);
+	item->setPen(pen);
+	return item;
+}
+
+QGraphicsPolygonItem *GameWidget::createPolygon(QList<QPointF> points, QPen pen, QBrush brush)
+{
+	QPolygonF polygon;
+	int count = 0;
+	int length = points.length();
+	while(count < length)
+	{
+		polygon << points[count];
+		count++;
+	}
+	QGraphicsPolygonItem *item = new QGraphicsPolygonItem(polygon);
+	item->setBrush(brush);
+	item->setPen(pen);
 	return item;
 }
 

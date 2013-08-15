@@ -1,12 +1,13 @@
-#include "level_1.h"
+
+#include "level_2.h"
 #include "ui_game.h"
 
-Level_1::Level_1(QWidget *parent)
+Level_2::Level_2(QWidget *parent)
 {
-	level = 1;
-	maxApplesOnLevel = 1;
+	level = 2;
+	maxApplesOnLevel = 10;
 	levelSpeed = 300;
-	walls = new QList<QGraphicsPolygonItem*>;
+	walls = new QList<QGraphicsPolygonItem *>;
 
 	scene = new QGraphicsScene(this);
 	setScene(scene);
@@ -21,23 +22,39 @@ Level_1::Level_1(QWidget *parent)
 	applesCount = 0;
 	throwApple();
 	scene->addItem(apple);
+
+	drawWalls();
 }
 
-Level_1::~Level_1()
+Level_2::~Level_2()
 {
-	delete apple;
-	int count = walls->length();
-	while(count > 0)
-	{
-		count--;
-		delete walls->last();
-	}
-	delete walls;
-	delete scene;
-	delete snake;
 }
 
-void Level_1::createFirstSnake()
+void Level_2::drawWalls()
+{
+	QColor color;
+	color.setRgb(244, 164, 96);
+
+	QList<QPointF> points;
+	QGraphicsPolygonItem *polygon1 = createPolygon(points << QPointF(0, 0) << QPointF(14, 14)  <<  QPointF(736, 14) << QPointF(750, 0)
+												   , QPen(Qt::black), QBrush(color));
+	points.clear();
+	QGraphicsPolygonItem *polygon2 = createPolygon(points << QPointF(0, 0) << QPointF(14, 14)  <<  QPointF(14, 351) << QPointF(0, 365)
+												   , QPen(Qt::black), QBrush(color));
+	points.clear();
+	QGraphicsPolygonItem *polygon3 = createPolygon(points << QPointF(750, 365) << QPointF(736, 351)  <<  QPointF(14, 351) << QPointF(0, 365)
+												   , QPen(Qt::black), QBrush(color));
+	points.clear();
+	QGraphicsPolygonItem *polygon4 = createPolygon(points << QPointF(750, 365) << QPointF(736, 351)  <<  QPointF(736, 14) << QPointF(750, 0)
+												   , QPen(Qt::black), QBrush(color));
+	scene->addItem(polygon1);
+	scene->addItem(polygon2);
+	scene->addItem(polygon3);
+	scene->addItem(polygon4);
+	walls->append(QList<QGraphicsPolygonItem*>() << polygon1 << polygon2 << polygon3 << polygon4);
+}
+
+void Level_2::createFirstSnake()
 {
 	snake = new Snake;
 	QGraphicsEllipseItem* item1 = createEllipse(100, 170, 14, 14, QPen(Qt::black), QBrush(Qt::black));
@@ -52,7 +69,7 @@ void Level_1::createFirstSnake()
 	scene->addItem(item4);
 }
 
-void Level_1::snakeMovement()
+void Level_2::snakeMovement()
 {
 
 	int count = snake->length;
@@ -104,15 +121,22 @@ void Level_1::snakeMovement()
 		count--;
 		if (apple->collidesWithItem(snake->balls->at(0)))
 			onAppleIntersection();
-		bool l = snake->balls->at(count)->rect() == snake->balls->at(0)->rect();
 		if (snake->balls->at(count)->rect() == snake->balls->at(0)->rect())
 			emit gameOver();
 	}
 
-	//checkIntersection();
+	count = walls->length();
+	while(count > 0)
+	{
+		count--;
+		if (snake->balls->at(0)->collidesWithItem(walls->at(count)))
+			emit gameOver();
+			//emit wallsIntersection();
+	}
 }
 
-void Level_1::throwApple()
+
+void Level_2::throwApple()
 {
 	int x = rand() % 696 + 1;
 	int y = rand() % 363 + 1;
@@ -127,14 +151,10 @@ void Level_1::throwApple()
 	}
 }
 
-void Level_1::onAppleIntersection()
+void Level_2::onAppleIntersection()
 {
 	throwApple();
 	emit applesCountChanged(++applesCount);
-
-	if (applesCount == maxApplesOnLevel)
-		emit levelPassed(1);
-
 	QGraphicsEllipseItem *item = createEllipse(snake->balls->at(snake->length - 1)->rect().x()
 					, snake->balls->at(snake->length - 1)->rect().y(), 14, 14, QPen(Qt::black), QBrush(Qt::darkGray));
 	snake->balls->append(item);
@@ -142,7 +162,7 @@ void Level_1::onAppleIntersection()
 	scene->addItem(item);
 }
 
-void Level_1::keyPressEvent(QKeyEvent *event)
+void Level_2::keyPressEvent(QKeyEvent *event)
 {
 	switch(event->key())
 	{
@@ -176,12 +196,12 @@ void Level_1::keyPressEvent(QKeyEvent *event)
 	snake->isDirectionChanged = true;
 }
 
-void Level_1::stopGame()
+void Level_2::stopGame()
 {
 	gameTimer.stop();
 }
 
-void Level_1::continueGame()
+void Level_2::continueGame()
 {
 	gameTimer.start();
 

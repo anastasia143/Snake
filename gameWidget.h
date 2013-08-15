@@ -18,12 +18,13 @@ public:
 	int level;
 	int maxApplesOnLevel;
 	int levelSpeed;
+	int applesCount;
 
 signals:
 	void applesCountChanged(int);
-	void snakeSelfIntersection();
-	void wallsIntersection();
-	void levelIsPassed(int);
+	void gameOver();
+	//void wallsIntersection();
+	void levelPassed(int);
 
 protected:
 	void keyPressEvent(QKeyEvent *event);
@@ -33,10 +34,12 @@ protected:
 
 	QGraphicsScene *scene;
 	Snake *snake;
-	int applesCount;
+
 	QTimer gameTimer;
 	QGraphicsEllipseItem *apple;
+	QList<QGraphicsPolygonItem *> *walls;
 
-	QGraphicsEllipseItem *createEllipse(int x, int y, int w, int h, QPen pen, QBrush brush);
+	QGraphicsEllipseItem *createEllipse(int x, int y, int w, int h, QPen pen = QPen(Qt::black), QBrush brush = QBrush(Qt::blue));
+	QGraphicsPolygonItem *createPolygon(QList<QPointF> points, QPen pen = QPen(Qt::black), QBrush brush = QBrush(Qt::blue));
 	virtual void createFirstSnake() = 0;
 };

@@ -3,13 +3,13 @@
 #include <QMainWindow>
 #include "gameWidget.h"
 
-class Level_1 : public GameWidget
+class Level_2 : public GameWidget
 {
 	Q_OBJECT
 
 public:
-	explicit Level_1(QWidget *parent = 0);
-	~Level_1();
+	explicit Level_2(QWidget *parent = 0);
+	~Level_2();
 	void stopGame();
 	void continueGame();
 
@@ -28,4 +28,5 @@ protected:
 	//QGraphicsEllipseItem *apple;
 
 	void createFirstSnake();
+	void drawWalls();
 };

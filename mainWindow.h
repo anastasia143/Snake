@@ -4,6 +4,7 @@
 #include <QTime>
 #include <QTimeEdit>
 #include "levels/level_1.h"
+#include "levels/level_2.h"
 
 
 namespace Ui {
@@ -15,19 +16,21 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 	
 public:
-	explicit MainWindow(QWidget *parent = 0);
+	explicit MainWindow(QWidget *newParent = 0);
 	~MainWindow();
 
 public slots:
 	void onApplesCountChanged(int apples);
-	void gameOver();
+	void onGameOver();
 	void updateTime();
 	void pauseGame();
 	void continueGame();
+	void onLevelPassed(int);
 	
 protected:
 	Ui::MainWindow *ui;
 	GameWidget *gameWidget;
+	QWidget *parent;
 
 	int levelTimeSeconds;
 	int levelTimeMinutes;

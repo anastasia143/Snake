@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     gameWidget.cpp \
     headband.cpp \
     levels/level_1.cpp \
-    rules.cpp
+    rules.cpp \
+    levels/level_2.cpp
 
 HEADERS  += \
     mainWindow.h \
@@ -25,7 +26,8 @@ HEADERS  += \
     snake.h \
     headband.h \
     levels/level_1.h \
-    rules.h
+    rules.h \
+    levels/level_2.h
 
 FORMS    += game.ui \
     headband.ui \
