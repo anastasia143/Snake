@@ -26,12 +26,6 @@ Level_1::Level_1(QWidget *parent)
 Level_1::~Level_1()
 {
 	delete apple;
-	int count = walls->length();
-	while(count > 0)
-	{
-		count--;
-		delete walls->last();
-	}
 	delete walls;
 	delete scene;
 	delete snake;
@@ -103,16 +97,21 @@ void Level_1::snakeMovement()
 	{
 		count--;
 		if (apple->collidesWithItem(snake->balls->at(0)))
-			onAppleIntersection();
-		bool l = snake->balls->at(count)->rect() == snake->balls->at(0)->rect();
+		{
+			if (applesCount + 1 == maxApplesOnLevel)
+			{
+				emit levelPassed(1);
+				return;
+			}
+			else
+				onAppleIntersection();
+		}
 		if (snake->balls->at(count)->rect() == snake->balls->at(0)->rect())
 			emit gameOver();
 	}
-
-	//checkIntersection();
 }
 
-void Level_1::throwApple()
+bool Level_1::throwApple()
 {
 	int x = rand() % 696 + 1;
 	int y = rand() % 363 + 1;
@@ -123,17 +122,17 @@ void Level_1::throwApple()
 	{
 		count--;
 		if(snake->balls->at(count)->collidesWithItem(apple))
-			throwApple();
+			return 1;
 	}
+	return 0;
 }
 
 void Level_1::onAppleIntersection()
 {
-	throwApple();
+	bool result = throwApple();
+	while (result)
+		result = throwApple();
 	emit applesCountChanged(++applesCount);
-
-	if (applesCount == maxApplesOnLevel)
-		emit levelPassed(1);
 
 	QGraphicsEllipseItem *item = createEllipse(snake->balls->at(snake->length - 1)->rect().x()
 					, snake->balls->at(snake->length - 1)->rect().y(), 14, 14, QPen(Qt::black), QBrush(Qt::darkGray));

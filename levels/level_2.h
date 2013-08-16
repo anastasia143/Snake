@@ -15,18 +15,11 @@ public:
 
 public slots:
 	void snakeMovement();
-	void throwApple();
+	bool throwApple();
 
 protected:
 	void keyPressEvent(QKeyEvent *event);
 	void onAppleIntersection();
-
-	//QGraphicsScene *scene;
-	//Snake *snake;
-	//int applesCount;
-	//QTimer gameTimer;
-	//QGraphicsEllipseItem *apple;
-
 	void createFirstSnake();
 	void drawWalls();
 };

@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *newParent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	setWindowTitle("Snake");
+	setWindowTitle("Snake. Level 1: \"Easy game\" ");
 
 	parent = newParent;
 	levelTimeSeconds = 0;
@@ -93,8 +93,9 @@ void MainWindow::continueGame()
 
 void MainWindow::onLevelPassed(int level)
 {
-	//gameWidget->close();
 	ui->mainLayout->removeWidget(gameWidget);
+	gameWidget->stopGame();
+	//gameWidget->destroy();
 	gameWidget->close();
 	delete gameWidget;
 
@@ -102,8 +103,23 @@ void MainWindow::onLevelPassed(int level)
 	switch(level)
 	{
 	case 1:
+	{
+		setWindowTitle("Snake. Level 2: \"Locked up\" ");
 		newGameWidget = new Level_2(parent);
 		break;
+	}
+	case 2:
+	{
+		setWindowTitle("Snake. Level 3: \"Fast apples\" ");
+		newGameWidget = new Level_3(parent);
+		break;
+	}
+	case 3:
+	{
+		setWindowTitle("Snake. Level 4: \"Color madness\" ");
+		newGameWidget = new Level_4(parent);
+		break;
+	}
 	}
 	gameWidget = newGameWidget;
 	ui->mainLayout->addWidget(gameWidget);

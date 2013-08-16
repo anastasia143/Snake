@@ -30,7 +30,7 @@ protected:
 	void keyPressEvent(QKeyEvent *event);
 	void virtual onAppleIntersection() = 0;
 	void virtual snakeMovement() = 0;
-	void virtual throwApple() = 0;
+	bool virtual throwApple() = 0;
 
 	QGraphicsScene *scene;
 	Snake *snake;

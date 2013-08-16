@@ -5,6 +5,8 @@
 #include <QTimeEdit>
 #include "levels/level_1.h"
 #include "levels/level_2.h"
+#include "levels/level_3.h"
+#include "levels/level_4.h"
 
 
 namespace Ui {

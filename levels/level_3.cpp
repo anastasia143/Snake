@@ -1,11 +1,11 @@
-#include "level_2.h"
+#include "level_3.h"
 #include "ui_game.h"
 
-Level_2::Level_2(QWidget *parent)
+Level_3::Level_3(QWidget *parent)
 {
-	level = 2;
+	level = 3;
 	maxApplesOnLevel = 1;
-	levelSpeed = 300;
+	levelSpeed = 250;
 	walls = new QList<QGraphicsPolygonItem *>;
 
 	scene = new QGraphicsScene(this);
@@ -16,6 +16,8 @@ Level_2::Level_2(QWidget *parent)
 
 	connect(&gameTimer, SIGNAL(timeout()), this, SLOT(snakeMovement()));
 	gameTimer.start(levelSpeed);
+	connect(&timerForApples, SIGNAL(timeout()), this, SLOT(throwApple()));
+	timerForApples.start(7000);
 
 	apple = createEllipse(10, 10, 14, 14, QPen(Qt::black), QBrush(Qt::green));
 	applesCount = 0;
@@ -27,7 +29,7 @@ Level_2::Level_2(QWidget *parent)
 	scene->addItem(apple);
 }
 
-Level_2::~Level_2()
+Level_3::~Level_3()
 {
 	delete apple;
 	delete walls;
@@ -35,31 +37,27 @@ Level_2::~Level_2()
 	delete snake;
 }
 
-void Level_2::drawWalls()
+void Level_3::drawWalls()
 {
 	QColor color;
 	color.setRgb(244, 164, 96);
 
 	QList<QPointF> points;
-	QGraphicsPolygonItem *polygon1 = createPolygon(points << QPointF(0, 0) << QPointF(14, 14)  <<  QPointF(736, 14) << QPointF(750, 0)
+	QGraphicsPolygonItem *polygon1 = createPolygon(points << QPointF(200, 75) << QPointF(214, 75)  <<  QPointF(214, 315) << QPointF(200, 315)
 												   , QPen(Qt::black), QBrush(color));
 	points.clear();
-	QGraphicsPolygonItem *polygon2 = createPolygon(points << QPointF(0, 0) << QPointF(14, 14)  <<  QPointF(14, 351) << QPointF(0, 365)
+	QGraphicsPolygonItem *polygon2 = createPolygon(points << QPointF(525, 75) << QPointF(539, 75)  <<  QPointF(539, 315) << QPointF(525, 315)
 												   , QPen(Qt::black), QBrush(color));
 	points.clear();
-	QGraphicsPolygonItem *polygon3 = createPolygon(points << QPointF(750, 365) << QPointF(736, 351)  <<  QPointF(14, 351) << QPointF(0, 365)
-												   , QPen(Qt::black), QBrush(color));
-	points.clear();
-	QGraphicsPolygonItem *polygon4 = createPolygon(points << QPointF(750, 365) << QPointF(736, 351)  <<  QPointF(736, 14) << QPointF(750, 0)
+	QGraphicsPolygonItem *polygon3 = createPolygon(points << QPointF(265, 180) << QPointF(265, 166)  <<  QPointF(475, 166) << QPointF(475, 180)
 												   , QPen(Qt::black), QBrush(color));
 	scene->addItem(polygon1);
 	scene->addItem(polygon2);
 	scene->addItem(polygon3);
-	scene->addItem(polygon4);
-	walls->append(QList<QGraphicsPolygonItem*>() << polygon1 << polygon2 << polygon3 << polygon4);
+	walls->append(QList<QGraphicsPolygonItem*>() << polygon1 << polygon2 << polygon3);
 }
 
-void Level_2::createFirstSnake()
+void Level_3::createFirstSnake()
 {
 	snake = new Snake;
 	QGraphicsEllipseItem* item1 = createEllipse(100, 170, 14, 14, QPen(Qt::black), QBrush(Qt::black));
@@ -74,7 +72,7 @@ void Level_2::createFirstSnake()
 	scene->addItem(item4);
 }
 
-void Level_2::snakeMovement()
+void Level_3::snakeMovement()
 {
 
 	int count = snake->length;
@@ -128,7 +126,7 @@ void Level_2::snakeMovement()
 		{
 			if (applesCount + 1 == maxApplesOnLevel)
 			{
-				emit levelPassed(2);
+				emit levelPassed(3);
 				return;
 			}
 			else
@@ -149,7 +147,7 @@ void Level_2::snakeMovement()
 }
 
 
-bool Level_2::throwApple()
+bool Level_3::throwApple()
 {
 	int x = rand() % 696 + 1;
 	int y = rand() % 363 + 1;
@@ -166,17 +164,17 @@ bool Level_2::throwApple()
 	while(count > 0)
 	{
 		count--;
-		bool f = walls->at(count)->collidesWithItem(apple);
 		if(walls->at(count)->collidesWithItem(apple))
 			return 1;
 	}
+
 	return 0;
 }
 
-void Level_2::onAppleIntersection()
+void Level_3::onAppleIntersection()
 {
 	bool result = throwApple();
-	while(result)
+	while (result)
 		result = throwApple();
 	emit applesCountChanged(++applesCount);
 
@@ -187,7 +185,7 @@ void Level_2::onAppleIntersection()
 	scene->addItem(item);
 }
 
-void Level_2::keyPressEvent(QKeyEvent *event)
+void Level_3::keyPressEvent(QKeyEvent *event)
 {
 	switch(event->key())
 	{
@@ -221,13 +219,14 @@ void Level_2::keyPressEvent(QKeyEvent *event)
 	snake->isDirectionChanged = true;
 }
 
-void Level_2::stopGame()
+void Level_3::stopGame()
 {
 	gameTimer.stop();
 }
 
-void Level_2::continueGame()
+void Level_3::continueGame()
 {
 	gameTimer.start();
 }
+
 

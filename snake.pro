@@ -18,7 +18,9 @@ SOURCES += main.cpp \
     headband.cpp \
     levels/level_1.cpp \
     rules.cpp \
-    levels/level_2.cpp
+    levels/level_2.cpp \
+    levels/level_3.cpp \
+    levels/level_4.cpp
 
 HEADERS  += \
     mainWindow.h \
@@ -27,7 +29,9 @@ HEADERS  += \
     headband.h \
     levels/level_1.h \
     rules.h \
-    levels/level_2.h
+    levels/level_2.h \
+    levels/level_3.h \
+    levels/level_4.h
 
 FORMS    += game.ui \
     headband.ui \
