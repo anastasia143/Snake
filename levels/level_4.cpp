@@ -4,7 +4,7 @@
 Level_4::Level_4(QWidget *parent)
 {
 	level = 4;
-	maxApplesOnLevel = 100;
+	maxApplesOnLevel = 1;
 	levelSpeed = 300;
 	walls = new QList<QGraphicsPolygonItem *>;
 	colorArray = new QColor[21];

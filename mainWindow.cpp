@@ -14,7 +14,6 @@ MainWindow::MainWindow(QWidget *newParent) :
 
 	gameWidget = new Level_1(parent);
 	ui->mainLayout->addWidget(gameWidget);
-	//gameWidget->activateWindow();
 
 	ui->levelEdit->setText(QString::number(gameWidget->level));
 	ui->applesEdit->setText("0");
@@ -118,6 +117,12 @@ void MainWindow::onLevelPassed(int level)
 	{
 		setWindowTitle("Snake. Level 4: \"Color madness\" ");
 		newGameWidget = new Level_4(parent);
+		break;
+	}
+	case 4:
+	{
+		setWindowTitle("Snake. Level 5: \"Rooms\" ");
+		newGameWidget = new Level_5(parent);
 		break;
 	}
 	}

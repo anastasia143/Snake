@@ -7,6 +7,7 @@
 #include "levels/level_2.h"
 #include "levels/level_3.h"
 #include "levels/level_4.h"
+#include "levels/level_5.h"
 
 
 namespace Ui {
